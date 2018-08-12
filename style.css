@@ -63,6 +63,10 @@ body {
     font-size: 13px;
 }
 
+.particles-js {
+    height : 200%
+}
+
 .v-abs {
   position: absolute;
   top: 40%;
