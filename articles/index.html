@@ -2,122 +2,104 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="paper-full.min.js"></script>
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vdnt</title>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+  
+
 </head>
 
 <body>
-    <div class="canvas">
-        <canvas resize="true" hidpi="off" id="canvas-1" width="176" height="526" data-paper-scope="1" style="-webkit-user-drag: none; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-            class=""></canvas>
+  <div class="ui fixed inverted menu">
+    <div class="ui container">
+      <a href="#" class="header item">
+        <img class="logo" src="https://vedan.tk/assets/images/logo.png">
+      </a>
+      <a href="#" class="item">Home</a>
+      <div class="ui simple dropdown item">
+        Dropdown <i class="dropdown icon"></i>
+        <div class="menu">
+          <a class="item" href="#">Link Item</a>
+          <a class="item" href="#">Link Item</a>
+          <div class="divider"></div>
+          <div class="header">Header Item</div>
+          <div class="item">
+            <i class="dropdown icon"></i>
+            Sub Menu
+            <div class="menu">
+              <a class="item" href="#">Link Item</a>
+              <a class="item" href="#">Link Item</a>
+            </div>
+          </div>
+          <a class="item" href="#">Link Item</a>
+        </div>
+      </div>
     </div>
-    <script>
-        var values = {
-            friction: 0.8,
-            timeStep: 0.01,
-            amount: 15,
-            mass: 2,
-            count: 0
-        };
-        values.invMass = 1 / values.mass;
+  </div>
 
-        var path, springs;
-        var size = view.size * [1.2, 1];
+  <div class="ui main text container">
+    <h1 class="ui header">Semantic UI Fixed Template</h1>
+    <p>This is a basic fixed menu template using fixed size containers.</p>
+    <p>A text container is used for the main container, which is useful for single column layouts</p>
+    <img class="wireframe" src="assets/images/wireframe/media-paragraph.png">
+    <img class="wireframe" src="assets/images/wireframe/paragraph.png">
+    <img class="wireframe" src="assets/images/wireframe/paragraph.png">
+    <img class="wireframe" src="assets/images/wireframe/paragraph.png">
+    <img class="wireframe" src="assets/images/wireframe/paragraph.png">
+    <img class="wireframe" src="assets/images/wireframe/paragraph.png">
+    <img class="wireframe" src="assets/images/wireframe/paragraph.png">
+  </div>
 
-        var Spring = function (a, b, strength, restLength) {
-            this.a = a;
-            this.b = b;
-            this.restLength = restLength || 80;
-            this.strength = strength ? strength : 0.55;
-            this.mamb = values.invMass * values.invMass;
-        };
-
-        Spring.prototype.update = function () {
-            var delta = this.b - this.a;
-            var dist = delta.length;
-            var normDistStrength = (dist - this.restLength) /
-                (dist * this.mamb) * this.strength;
-            delta.y *= normDistStrength * values.invMass * 0.2;
-            if (!this.a.fixed)
-                this.a.y += delta.y;
-            if (!this.b.fixed)
-                this.b.y -= delta.y;
-        };
-
-
-        function createPath(strength) {
-            var path = new Path({
-                fillColor: 'black'
-            });
-            springs = [];
-            for (var i = 0; i <= values.amount; i++) {
-                var segment = path.add(new Point(i / values.amount, 0.5) * size);
-                var point = segment.point;
-                if (i == 0 || i == values.amount)
-                    point.y += size.height;
-                point.px = point.x;
-                point.py = point.y;
-                // The first two and last two points are fixed:
-                point.fixed = i < 2 || i > values.amount - 2;
-                if (i > 0) {
-                    var spring = new Spring(segment.previous.point, point, strength);
-                    springs.push(spring);
-                }
-            }
-            path.position.x -= size.width / 4;
-            return path;
-        }
-
-        function onResize() {
-            if (path)
-                path.remove();
-            size = view.bounds.size * [2, 1];
-            path = createPath(0.1);
-        }
-
-        function onMouseMove(event) {
-            var location = path.getNearestLocation(event.point);
-            var segment = location.segment;
-            var point = segment.point;
-
-            if (!point.fixed && location.distance < size.height / 4) {
-                var y = event.point.y;
-                point.y += (y - point.y) / 6;
-                if (segment.previous && !segment.previous.fixed) {
-                    var previous = segment.previous.point;
-                    previous.y += (y - previous.y) / 24;
-                }
-                if (segment.next && !segment.next.fixed) {
-                    var next = segment.next.point;
-                    next.y += (y - next.y) / 24;
-                }
-            }
-        }
-
-        function onFrame(event) {
-            updateWave(path);
-        }
-
-        function updateWave(path) {
-            var force = 1 - values.friction * values.timeStep * values.timeStep;
-            for (var i = 0, l = path.segments.length; i < l; i++) {
-                var point = path.segments[i].point;
-                var dy = (point.y - point.py) * force;
-                point.py = point.y;
-                point.y = Math.max(point.y + dy, 0);
-            }
-
-            for (var j = 0, l = springs.length; j < l; j++) {
-                springs[j].update();
-            }
-            path.smooth({
-                type: 'continuous'
-            });
-        }
-    </script>
+  <div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+      <div class="ui stackable inverted divided grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">Group 1</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Link One</a>
+            <a href="#" class="item">Link Two</a>
+            <a href="#" class="item">Link Three</a>
+            <a href="#" class="item">Link Four</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Group 2</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Link One</a>
+            <a href="#" class="item">Link Two</a>
+            <a href="#" class="item">Link Three</a>
+            <a href="#" class="item">Link Four</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Group 3</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Link One</a>
+            <a href="#" class="item">Link Two</a>
+            <a href="#" class="item">Link Three</a>
+            <a href="#" class="item">Link Four</a>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Footer Header</h4>
+          <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+        </div>
+      </div>
+      <div class="ui inverted section divider"></div>
+      <img src="assets/images/logo.png" class="ui centered mini image">
+      <div class="ui horizontal inverted small divided link list">
+        <a class="item" href="#">Site Map</a>
+        <a class="item" href="#">Contact Us</a>
+        <a class="item" href="#">Terms and Conditions</a>
+        <a class="item" href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
