@@ -1,3 +1,4 @@
+@ECHO OFF
 ECHO VVVVV V    V VVVVV VVVVV
 ECHO V   V V    V   V   V   V
 ECHO VVVVV V    V   V   V   V
