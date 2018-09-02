@@ -1,0 +1,258 @@
+<html lang="en" class="">
+
+<head>
+    <script src="//static.codepen.io/assets/editor/live/console_runner-ce3034e6bde3912cc25f83cccb7caa2b0f976196f2f2d52303a462c826d54a73.js"></script>
+    <script src="//static.codepen.io/assets/editor/live/css_live_reload_init-e9c0cc5bb634d3d14b840de051920ac153d7d3d36fb050abad285779d7e5e8bd.js"></script>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" type="image/x-icon" href="//static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+    <link rel="mask-icon" type="" href="//static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"
+        color="#111">
+    <link rel="canonical" href="https://codepen.io/joshbivens/pen/mPwxWG">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style class="cp-pen-styles">
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,100);
+        body {
+            background: #333;
+            font-family: 'Lato', sans-serif;
+        }
+
+        #app {
+            margin-top: 50px;
+            color: #fff;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2em;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 130px;
+            margin-bottom: 30px;
+        }
+
+        #creator,
+        #progress {
+            border: 0;
+            border-radius: 0;
+            background: #00897b;
+            outline: none;
+            color: #fff;
+            transition: background .15s ease;
+        }
+
+        #creator:hover,
+        #progress:hover {
+            background: #007064;
+        }
+
+        #progress {
+            position: absolute;
+            bottom: 22px;
+            right: 22px;
+            border-radius: 50%;
+            margin: 13px 0 0 0;
+            padding: 0 14px;
+            cursor: pointer;
+        }
+
+        .lower div {
+            float: left;
+            font-size: 1.4em;
+            margin: 18px 0 0 3px;
+        }
+
+        .lower span {
+            position: absolute;
+            top: 1px;
+            right: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            color: #444;
+            transition: color .2s ease;
+        }
+
+        .lower span:hover {
+            color: #333;
+        }
+
+        .habit {
+            margin-top: 20px;
+        }
+
+        .columns {
+            position: relative;
+            margin: 20px 20px 0 0;
+            background: #555;
+            padding: 35px;
+            min-width: 300px;
+        }
+
+        .columns h4 {
+            margin-bottom: 12;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .shell {
+            height: 20px;
+            width: 230px;
+            border-radius: 13px;
+            background: linear-gradient(to right, #9658b5, #e3505a);
+            overflow: hidden;
+        }
+
+        .bar {
+            background: #333;
+            height: 20px;
+            float: right;
+        }
+
+        .slide-transition {
+            opacity: 1;
+            transition: all .3s ease;
+        }
+
+        .slide-enter,
+        .slide-leave {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        @media screen and (max-width: 550px) {
+            .columns {
+                text-align: center;
+            }
+            .columns .shell {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="app">
+            <h1>Habit Tracker</h1>
+            <div>
+                <input type="text" placeholder="Habit Title">
+                <br>
+                <input type="number" placeholder="Repetitions">
+                <br>
+                <button id="creator">Add</button>
+            </div>
+            <div class="row habit">
+                <div class="four columns slide-transition" style="border-bottom: 5px solid rgb(228, 90, 132);">
+                    <h4>Bike</h4>
+                    <div class="shell">
+                        <div class="bar" style="width: 100%;"></div>
+                    </div>
+                    <div class="lower">
+                        <span>
+                            <i class="fa fa-times"></i>
+                        </span>
+                        <button id="progress" style="background: rgb(228, 90, 132);">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <div>0/3 times</div>
+                        <div class="slide-transition" style="display: none;">Complete!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="//static.codepen.io/assets/common/stopExecutionOnTimeout-41c52890748cd7143004e05d3c5f786c66b19939c4500ce446314d1748483e13.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <script>
+        function setCookie(cname, cvalue) {
+            var d = new Date();
+            d.setTime(d.getTime() + (5 * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        const colors = [
+            "#E45A84",
+            "#FFD478",
+            "#BA53DE",
+            "#393E46",
+            "#497285",
+            "#3AB1C8",
+            "#8DC6FF",
+            "#B2E672",
+            "#B17179"
+        ];
+
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                habits: [{
+                    title: 'Bike',
+                    reps: 3,
+                    initial: 3,
+                    complete: 0,
+                    random: "#E45A84",
+                    finished: false
+                }],
+
+
+                newHabit: '',
+                reps: '',
+                initial: 0,
+                complete: 0,
+                colors: colors,
+                finished: false
+            },
+
+            methods: {
+                addHabit() {
+                    if (this.newHabit && this.reps) {
+                        this.habits.push({
+                            title: this.newHabit,
+                            reps: this.reps,
+                            initial: this.reps,
+                            complete: 0,
+                            random: this.colors[Math.floor(Math.random() * this.colors.length)],
+                            finished: false
+                        });
+
+                    }
+                    this.newHabit = '';
+                    this.reps = '';
+                    setCookie(newHabit, reps);
+                    consol.log(document.cookie);
+                },
+                removeHabit(habit) {
+                    this.habits.$remove(habit);
+                    console.log(this.habits);
+                },
+                completeReps(habit) {
+                    if (habit.reps > 0) {
+                        habit.reps -= 1;
+                        habit.complete += 1;
+                    }
+                    if (habit.reps === 0) {
+                        habit.finished = true;
+                    }
+                }
+            }
+        });
+        //# sourceURL=pen.js
+    </script>
+</body>
+
+</html>
