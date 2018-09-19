@@ -1,173 +1,189 @@
-Pico
-====
+# ![](https://avatars1.githubusercontent.com/u/8237355?v=2&s=50) Grav
 
-[![License](https://picocms.github.io/badges/pico-license.svg)](https://github.com/picocms/Pico/blob/master/LICENSE.md)
-[![Version](https://picocms.github.io/badges/pico-version.svg)](https://github.com/picocms/Pico/releases/latest)
-[![Build Status](https://api.travis-ci.org/picocms/Pico.svg?branch=master)](https://travis-ci.org/picocms/Pico)
-[![Freenode IRC Webchat](https://picocms.github.io/badges/pico-chat.svg)](https://webchat.freenode.net/?channels=%23picocms)
-[![Open Bounties on Bountysource](https://www.bountysource.com/badge/team?team_id=198139&style=bounties_received)](https://www.bountysource.com/teams/picocms)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/cfd20465-d0f8-4a0a-8444-467f5b5f16ad/mini.png)](https://insight.sensiolabs.com/projects/cfd20465-d0f8-4a0a-8444-467f5b5f16ad) [![Slack](https://grav-chat.now.sh/badge.svg)](https://chat.getgrav.org) [![Build Status](https://travis-ci.org/getgrav/grav.svg?branch=develop)](https://travis-ci.org/getgrav/grav) [![OpenCollective](https://opencollective.com/grav/backers/badge.svg)](#backers) [![OpenCollective](https://opencollective.com/grav/sponsors/badge.svg)](#sponsors)
 
-Pico is a stupidly simple, blazing fast, flat file CMS.
+Grav is a **Fast**, **Simple**, and **Flexible**, file-based Web-platform.  There is **Zero** installation required.  Just extract the ZIP archive, and you are already up and running.  It follows similar principles to other flat-file CMS platforms, but has a different design philosophy than most. Grav comes with a powerful **Package Management System** to allow for simple installation and upgrading of plugins and themes, as well as simple updating of Grav itself.
 
-Visit us at http://picocms.org/ and see http://picocms.org/about/ for more info.
+The underlying architecture of Grav is designed to use well-established and _best-in-class_ technologies to ensure that Grav is simple to use and easy to extend. Some of these key technologies include:
 
-Screenshot
-----------
+* [Twig Templating](http://twig.sensiolabs.org/): for powerful control of the user interface
+* [Markdown](http://en.wikipedia.org/wiki/Markdown): for easy content creation
+* [YAML](http://yaml.org): for simple configuration
+* [Parsedown](http://parsedown.org/): for fast Markdown and Markdown Extra support
+* [Doctrine Cache](http://doctrine-orm.readthedocs.io/projects/doctrine-orm/en/latest/reference/caching.html): layer for performance
+* [Pimple Dependency Injection Container](http://pimple.sensiolabs.org/): for extensibility and maintainability
+* [Symfony Event Dispatcher](http://symfony.com/doc/current/components/event_dispatcher/introduction.html): for plugin event handling
+* [Symfony Console](http://symfony.com/doc/current/components/console/introduction.html): for CLI interface
+* [Gregwar Image Library](https://github.com/Gregwar/Image): for dynamic image manipulation
 
-![Pico Screenshot](https://picocms.github.io/screenshots/pico-20.png)
+# Requirements
 
-Install
--------
+- PHP 5.6.4 or higher. Check the [required modules list](https://learn.getgrav.org/basics/requirements#php-requirements)
+- Check the [Apache](https://learn.getgrav.org/basics/requirements#apache-requirements) or [IIS](https://learn.getgrav.org/basics/requirements#iis-requirements) requirements
 
-Installing Pico is dead simple - and done in seconds! If you have access to a shell on your server (i.e. SSH access), we recommend using [Composer][]. If not, use a pre-bundled release. If you don't know what "SSH access" is, head over to the pre-bundled release. 😇
+# QuickStart
 
-Pico requires PHP 5.3.6+
+These are the options to get Grav:
 
-### I want to use Composer
+### Downloading a Grav Package
 
-Starting with Pico 2.0 we recommend installing Pico using Composer whenever possible. Trust us, you won't regret it when it comes to upgrading Pico! Anyway, if you don't want to use Composer, or if you simply can't use Composer because you don't have access to a shell on your server, don't despair, installing Pico using a pre-bundled release is still easier than everything you know!
+You can download a **ready-built** package from the [Downloads page on https://getgrav.org](https://getgrav.org/downloads)
 
-###### Step 1
+### With Composer
 
-Open a shell and navigate to the desired install directory of Pico within the `httpdocs` directory (e.g. `/var/www/html`) of your server. Download Composer and run it with the `create-project` option:
+You can create a new project with the latest **stable** Grav release with the following command:
 
-```shell
-$ curl -sSL https://getcomposer.org/installer | php
-$ php composer.phar create-project picocms/pico-composer .
+```
+$ composer create-project getgrav/grav ~/webroot/grav
 ```
 
-###### Step 2
+### From GitHub
 
-What second step? There's no second step. That's it! Open your favorite web browser and navigate to your brand new, stupidly simple, blazing fast, flat file CMS! Pico's default contents will explain how to create your own contents. 😊
+1. Clone the Grav repository from [https://github.com/getgrav/grav]() to a folder in the webroot of your server, e.g. `~/webroot/grav`. Launch a **terminal** or **console** and navigate to the webroot folder:
+   ```
+   $ cd ~/webroot
+   $ git clone https://github.com/getgrav/grav.git
+   ```
 
-### I want to use a pre-bundled release
+2. Install the **plugin** and **theme dependencies** by using the [Grav CLI application](https://learn.getgrav.org/advanced/grav-cli) `bin/grav`:
+   ```
+   $ cd ~/webroot/grav
+   $ bin/grav install
+   ```
 
-Do you know the feeling: You want to install a new website, so you upload all files of your favorite CMS and run the setup script - just to find out that you forgot about creating the SQL database first? Later the setup script tells you that the file permissions are wrong. Heck, what does this even mean? Forget about it, Pico is different!
+Check out the [install procedures](https://learn.getgrav.org/basics/installation) for more information.
 
-###### Step 1
+# Adding Functionality
 
-[Download the latest Pico release][LatestRelease] and upload all files to the `httpdocs` directory (e.g. `/var/www/html`) of your server.
+You can download [plugins](https://getgrav.org/downloads/plugins) or [themes](https://getgrav.org/downloads/themes) manually from the appropriate tab on the [Downloads page on https://getgrav.org](https://getgrav.org/downloads), but the preferred solution is to use the [Grav Package Manager](https://learn.getgrav.org/advanced/grav-gpm) or `GPM`:
 
-###### Step 2
-
-Okay, here's the catch: There's no catch. That's it! Open your favorite web browser and navigate to your brand new, stupidly simple, blazing fast, flat file CMS! Pico's default contents will explain how to create your own contents. 😊
-
-### I'm a developer
-
-So, you're one of these amazing folks making all of this possible? We love you guys! As a developer we recommend you to clone [Pico's Git repository][PicoGit] and use Composer to install its dependencies. You can find both [Pico][PicoPackagist] and [Pico's Composer starter project][PicoComposerPackagist] on [Packagist.org][Packagist]. Using Pico's Git repository is different from using one of the installation methods elucidated above, because it uses Pico as the Composer root package. Furthermore it gives you the current development version of Pico, what is likely *unstable* and *not ready for production use*!
-
-Open a shell and navigate to the desired install directory of Pico within the `httpdocs` directory (e.g. `/var/www/html`) of your server. You can now clone Pico's Git repository, download Composer and install Pico's dependencies as follows:
-
-```shell
-$ git clone https://github.com/picocms/Pico.git .
-$ curl -sSL https://getcomposer.org/installer | php
-$ php composer.phar install
+```
+$ bin/gpm index
 ```
 
-Upgrade
--------
+This will display all the available plugins and then you can install one or more with:
 
-Do you remember when you installed Pico? It was ingeniously simple, wasn't it? Upgrading Pico is no difference! The upgrade process differs depending on whether you used [Composer][] or a pre-bundled release to install Pico. Please note that you should *always* create a backup of your Pico installation before upgrading!
-
-Pico follows [Semantic Versioning 2.0][SemVer] and uses version numbers like `MAJOR`.`MINOR`.`PATCH`. When we update the `PATCH` version (e.g. `2.0.0` to `2.0.1`), we made backwards-compatible bug fixes. If we change the `MINOR` version (e.g. `2.0` to `2.1`), we added functionality in a backwards-compatible manner. Upgrading Pico is dead simple in both cases. Simply head over to the appropiate Upgrade sections below.
-
-But wait, we forgot to mention what happens when we update the `MAJOR` version (e.g. `2.0` to `3.0`). In this case we made incompatible API changes. We will then provide a appropriate upgrade tutorial, so please head over to the ["Upgrade" page on our website][HelpUpgrade].
-
-### I've used Composer to install Pico
-
-Upgrading Pico is dead simple if you've used Composer to install Pico. Simply open a shell and navigate to Pico's install directory within the `httpdocs` directory (e.g. `/var/www/html/pico`) of your server. You can now upgrade Pico using just a single command:
-
-```shell
-$ php composer.phar update
+```
+$ bin/gpm install <plugin/theme>
 ```
 
-That's it! Composer will automatically update Pico and all plugins and themes you've installed using Composer. Please make sure to manually update all plugins and themes you've installed manually.
+# Updating
 
-### I've used a pre-bundled release to install Pico
+To update Grav you should use the [Grav Package Manager](https://learn.getgrav.org/advanced/grav-gpm) or `GPM`:
 
-Okay, installing Pico was easy, but upgrading Pico is going to be hard, isn't it? I'm affraid I have to disappoint you... It's just as simple as installing Pico!
-
-First you'll have to delete the `vendor` directory of your Pico installation (e.g. if you've installed Pico to `/var/www/html/pico`, delete `/var/www/html/pico/vendor`). Then [download the latest Pico release][LatestRelease] and upload all files to your existing Pico installation directory. You will be prompted whether you want to overwrite files like `index.php`, `.htaccess`, ... - simply hit "Yes".
-
-That's it! Now that Pico is up-to-date, you need to update all plugins and themes you've installed.
-
-### I'm a developer
-
-As a developer you should be up-to-date already... 😉 For the sake of completeness, if you want to upgrade Pico, simply open a shell and navigate to Pico's install directory within the `httpdocs` directory (e.g. `/var/www/html/pico`) of your server. Then pull the latest commits from [Pico's Git repository][PicoGit] and let Composer update your dependencies:
-
-```shell
-$ git pull
-$ php composer.phar update
+```
+$ bin/gpm selfupgrade
 ```
 
-Getting Help
-------------
+To update plugins and themes:
 
-#### Getting Help as a user
+```
+$ bin/gpm update
+```
 
-If you want to get started using Pico, please refer to our [user docs][HelpUserDocs]. Please read the [upgrade notes][HelpUpgrade] if you want to upgrade from Pico 1.0 to Pico 2.0. You can find officially supported [plugins][OfficialPlugins] and [themes][OfficialThemes] on our website. A greater choice of third-party plugins and themes can be found in our [Wiki][] on the [plugins][WikiPlugins] or [themes][WikiThemes] pages respectively. If you want to create your own plugin or theme, please refer to the "Getting Help as a developer" section below.
 
-#### Getting Help as a developer
+# Contributing
+We appreciate any contribution to Grav, whether it is related to bugs, grammar, or simply a suggestion or improvement! Please refer to the [Contributing guide](CONTRIBUTING.md) for more guidance on this topic.
 
-If you're a developer, please refer to the "Contributing" section below and our [contribution guidelines][ContributionGuidelines]. To get you started with creating a plugin or theme, please read the [developer docs on our website][HelpDevDocs].
+## Security issues
+If you discover a possible security issue related to Grav or one of its plugins, please email the core team at contact@getgrav.org and we'll address it as soon as possible.
 
-#### You still need help or experience a problem with Pico?
+# Getting Started
 
-When the docs can't answer your question, you can get help by joining us on [#picocms on Freenode IRC](https://webchat.freenode.net/?channels=%23picocms). When you're experiencing problems with Pico, please don't hesitate to create a new [Issue][Issues] on GitHub. Concerning problems with plugins or themes, please refer to the website of the developer of this plugin or theme.
+* [What is Grav?](https://learn.getgrav.org/basics/what-is-grav)
+* [Install](https://learn.getgrav.org/basics/installation) Grav in few seconds
+* Understand the [Configuration](https://learn.getgrav.org/basics/grav-configuration)
+* Take a peek at our available free [Skeletons](https://getgrav.org/downloads/skeletons)
+* If you have questions, jump on our [Slack Room](https://getgrav.org/slack)!
+* Have fun!
 
-**Before creating a new Issue,** please make sure the problem wasn't reported yet using [GitHubs search engine][IssuesSearch]. Please describe your issue as clear as possible and always include the *Pico version* you're using. Provided that you're using *plugins*, include a list of them too. We need information about the *actual and expected behavior*, the *steps to reproduce* the problem, and what steps you have taken to resolve the problem by yourself (i.e. *your own troubleshooting*).
+# Exploring More
 
-Contributing
-------------
+* Have a look at our [Basic Tutorial](https://learn.getgrav.org/basics/basic-tutorial)
+* Dive into more [advanced](https://learn.getgrav.org/advanced) functions
+* Learn about the [Grav CLI](https://learn.getgrav.org/cli-console/grav-cli)
+* Review examples in the [Grav Cookbook](https://learn.getgrav.org/cookbook)
 
-You want to contribute to Pico? We really appreciate that! You can help make Pico better by [contributing code][PullRequests] or [reporting issues][Issues], but please take note of our [contribution guidelines][ContributionGuidelines]. In general you can contribute in three different areas:
+# Backers
+Support Grav with a monthly donation to help us continue development. [[Become a backer](https://opencollective.com/grav#backer)]
 
-1. Plugins & Themes: You're a plugin developer or theme designer? We love you guys! You can find tons of information about how to develop plugins and themes at http://picocms.org/development/. If you have created a plugin or theme, please add it to our [Wiki][], either on the [plugins][WikiPlugins] or [themes][WikiThemes] page. You may also [Submit][] it to our website, where it'll be displayed on the official [plugin][OfficialPlugins] or [theme][OfficialThemes] pages!
+<a href="https://opencollective.com/grav/backer/0/website" target="_blank"><img src="https://opencollective.com/grav/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/1/website" target="_blank"><img src="https://opencollective.com/grav/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/2/website" target="_blank"><img src="https://opencollective.com/grav/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/3/website" target="_blank"><img src="https://opencollective.com/grav/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/4/website" target="_blank"><img src="https://opencollective.com/grav/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/5/website" target="_blank"><img src="https://opencollective.com/grav/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/6/website" target="_blank"><img src="https://opencollective.com/grav/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/7/website" target="_blank"><img src="https://opencollective.com/grav/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/8/website" target="_blank"><img src="https://opencollective.com/grav/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/9/website" target="_blank"><img src="https://opencollective.com/grav/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/10/website" target="_blank"><img src="https://opencollective.com/grav/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/11/website" target="_blank"><img src="https://opencollective.com/grav/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/12/website" target="_blank"><img src="https://opencollective.com/grav/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/13/website" target="_blank"><img src="https://opencollective.com/grav/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/14/website" target="_blank"><img src="https://opencollective.com/grav/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/15/website" target="_blank"><img src="https://opencollective.com/grav/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/16/website" target="_blank"><img src="https://opencollective.com/grav/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/17/website" target="_blank"><img src="https://opencollective.com/grav/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/18/website" target="_blank"><img src="https://opencollective.com/grav/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/19/website" target="_blank"><img src="https://opencollective.com/grav/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/20/website" target="_blank"><img src="https://opencollective.com/grav/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/21/website" target="_blank"><img src="https://opencollective.com/grav/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/22/website" target="_blank"><img src="https://opencollective.com/grav/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/23/website" target="_blank"><img src="https://opencollective.com/grav/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/24/website" target="_blank"><img src="https://opencollective.com/grav/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/25/website" target="_blank"><img src="https://opencollective.com/grav/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/26/website" target="_blank"><img src="https://opencollective.com/grav/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/27/website" target="_blank"><img src="https://opencollective.com/grav/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/28/website" target="_blank"><img src="https://opencollective.com/grav/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/grav/backer/29/website" target="_blank"><img src="https://opencollective.com/grav/backer/29/avatar.svg"></a>
 
-2. Documentation: We always appreciate people improving our documentation. You can either improve the [inline user docs][EditInlineDocs] or the more extensive [user docs on our website][EditUserDocs]. You can also improve the [docs for plugin and theme developers][EditDevDocs]. Simply fork our website's Git repository from https://github.com/picocms/picocms.github.io, change the Markdown files and open a [pull request][PullRequestsWebsite].
 
-3. Pico's Core: The supreme discipline is to work on Pico's Core. Your contribution should help *every* Pico user to have a better experience with Pico. If this is the case, fork Pico from https://github.com/picocms/Pico and open a [pull request][PullRequests]. We look forward to your contribution!
+# Sponsors
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/grav#sponsor)]
 
-By contributing to Pico, you accept and agree to the *Developer Certificate of Origin* for your present and future contributions submitted to Pico. Please refer to the ["Developer Certificate of Origin" section in our `CONTRIBUTING.md`][ContributionGuidelinesDCO].
+<a href="https://opencollective.com/grav/sponsor/0/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/1/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/2/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/3/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/4/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/5/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/6/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/7/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/8/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/9/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/10/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/11/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/12/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/13/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/14/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/15/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/16/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/17/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/18/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/19/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/20/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/21/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/22/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/23/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/24/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/25/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/26/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/27/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/28/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/grav/sponsor/29/website" target="_blank"><img src="https://opencollective.com/grav/sponsor/29/avatar.svg"></a>
 
-You don't have time to contribute code to Pico, but still want to "stand a coffee" for the ones who do? You can contribute monetary to Pico using [Bountysource][], a crowd funding website that focuses on individual issues and feature requests. Just refer to the "Bounties and Fundraisers" section below for more info.
+# License
 
-Bounties and Fundraisers
-------------------------
+See [LICENSE](LICENSE.txt)
 
-Pico uses [Bountysource][] to allow monetary contributions to the project. Bountysource is a crowd funding website that focuses on individual issues and feature requests in Open Source projects using micropayment. Users, or "Backers", can pledge money for fixing a specific issue, implementing new features, or developing a new plugin or theme. Open source software developers, or "Bounty Hunters", can then pick up and solve these tasks to earn the money.
 
-Obviously this won't allow a developer to replace a full time job, it's rather aiming to "stand a coffee". However, it helps bringing users and developers closer together, and shows developers what users want and how much they care about certain things. Nevertheless you can still donate money to the project itself, as an easy way to say "Thank You" and to support Pico.
+[gitflow-model]: http://nvie.com/posts/a-successful-git-branching-model/
+[gitflow-extensions]: https://github.com/nvie/gitflow
 
-If you want to encourage developers to [fix a specific issue][Issues] or implement a feature, simply [pledge a new bounty][Bountysource] or back an existing one.
+# Running Tests
 
-As a developer you can pick up a bounty by simply contributing to Pico (please refer to the "Contributing" section above). You don't have to be a official Pico Contributor! Pico is a Open Source project, anyone can open [pull requests][PullRequests] and claim bounties.
-
-Official Pico Contributors won't claim bounties on their own behalf, Pico will never take any money out of Bountysource. All money collected by Pico is used to pledge new bounties or to support projects Pico depends on.
-
-[Composer]: https://getcomposer.org/
-[LatestRelease]: https://github.com/picocms/Pico/releases/latest
-[PicoGit]: https://github.com/picocms/Pico
-[PicoPackagist]: http://packagist.org/packages/picocms/pico
-[PicoComposerPackagist]: http://packagist.org/packages/picocms/pico-composer
-[Packagist]: http://packagist.org/
-[SemVer]: http://semver.org
-[HelpUpgrade]: http://picocms.org/in-depth/upgrade/
-[HelpUserDocs]: http://picocms.org/docs/
-[HelpDevDocs]: http://picocms.org/development/
-[Submit]: http://picocms.org/in-depth/submission_guidelines
-[OfficialPlugins]: http://picocms.org/plugins/
-[OfficialThemes]: http://picocms.org/themes/
-[Wiki]: https://github.com/picocms/Pico/wiki
-[WikiPlugins]: https://github.com/picocms/Pico/wiki/Pico-Plugins
-[WikiThemes]: https://github.com/picocms/Pico/wiki/Pico-Themes
-[Issues]: https://github.com/picocms/Pico/issues
-[IssuesSearch]: https://github.com/picocms/Pico/search?type=Issues
-[PullRequests]: https://github.com/picocms/Pico/pulls
-[PullRequestsWebsite]: https://github.com/picocms/picocms.github.io/pulls
-[ContributionGuidelines]: https://github.com/picocms/Pico/blob/master/CONTRIBUTING.md
-[ContributionGuidelinesDCO]: https://github.com/picocms/Pico/blob/master/CONTRIBUTING.md#developer-certificate-of-origin
-[EditInlineDocs]: https://github.com/picocms/Pico/edit/master/content-sample/index.md
-[EditUserDocs]: https://github.com/picocms/picocms.github.io/tree/master/_docs
-[EditDevDocs]: https://github.com/picocms/picocms.github.io/tree/master/_development
-[Bountysource]: https://www.bountysource.com/teams/picocms
+First install the dev dependencies by running `composer update` from the Grav root.  
+Then `composer test` will run the Unit Tests, which should be always executed successfully on any site.  
+Windows users should use the `composer test-windows` command.  
+You can also run a single unit test file, e.g. `composer test tests/unit/Grav/Common/AssetsTest.php`

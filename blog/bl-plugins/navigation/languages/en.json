@@ -1,0 +1,10 @@
+{
+	"plugin-data":
+	{
+		"name": "Navigation",
+		"description": "Create your own navigation menu with latest pages or static pages."
+	},
+	"home-link": "Home link",
+	"show-the-home-link-on-the-sidebar": "Show the home link on the sidebar.",
+	"amount-of-items": "Amount of items"
+}
